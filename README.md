@@ -31,6 +31,11 @@ dependencies {
 
 ### Features
 * 앞 글자의 종성(받침) 여부에 따라 조사(은,는,이,가,을,를 등)를 교정합니다.
+* 조사로 간주 되기 위해서 반드시 띄어 쓰기가 되어 있어야 합니다.
+```java
+KoreanUtils.format("%s는", nickName); // 동작 안함. 
+KoreanUtils.format("%s는 ", nickName); // OK
+```
 * 한글 뿐만 아니라 영어, 숫자, 한자 등도 처리가 가능합니다.
 * 조사 앞에 인용 부호나 괄호가 있어도 동작합니다.
 ```java
