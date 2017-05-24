@@ -39,7 +39,7 @@ KoreanUtils.format("%s는 ", nickName); // OK
 * 한글 뿐만 아니라 영어, 숫자, 한자 등도 처리가 가능합니다.
 * 조사 앞에 인용 부호나 괄호가 있어도 동작합니다.
 ```java
-KoreanUtils.format("'%s'는 사용인 닉네임 입니다.", nickName);
+KoreanUtils.format("'%s'는 사용중인 닉네임 입니다.", nickName);
 ```
 * Detector를 직접 등록하거나 우선 순위 등을 조정할 수 있습니다. (JongSungDetector 클래스 순서 참고)
 
