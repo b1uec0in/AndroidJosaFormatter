@@ -77,6 +77,9 @@ public class ExampleUnitTest {
         assertEqualsEx("갤럭시를 아이폰으로 ", KoreanUtils.format("%1$s을 %2$s으로 ", "갤럭시", "아이폰"));
         assertEqualsEx("iPhone을 Galaxy로 ", KoreanUtils.format("%2$s을 %1$s으로 ", "Galaxy", "iPhone"));
 
+        // 판단 불가
+        assertEqualsEx("???을(를) 찾을 수 없습니다.", KoreanUtils.format("%s를 찾을 수 없습니다.", "???"));
+
         // 기타
         assertEqualsEx("SK에서는 幸福과 覇氣를 기억하세요.", KoreanUtils.format("%s에서는 %s와 %s를 기억하세요.", "SK", "幸福", "覇氣"));
 
@@ -88,6 +91,7 @@ public class ExampleUnitTest {
 
     @Test
     public void testEnglishNumberJongSungDetector() throws Exception {
+        // 영문+숫자인 경우 항상 숫자를 영어로 읽도록 함.
         System.out.println("\nEnglishNumberJongSungDetector:");
 
         JosaFormatter josaFormatter = new JosaFormatter();
@@ -101,7 +105,6 @@ public class ExampleUnitTest {
                 break;
             }
         }
-
 
 
         assertEqualsEx("MP3는 이미 사용중입니다.", josaFormatter.format("%s는 이미 사용중입니다.", "MP3"));

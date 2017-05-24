@@ -19,8 +19,7 @@ public class JosaFormatter {
             new Pair<>("이 ", "가 "),
             new Pair<>("을 ", "를 "),
             new Pair<>("과 ", "와 "),
-            new Pair<>("으로 ", "로 "),
-            new Pair<>("아 ", "는 ")
+            new Pair<>("으로 ", "로 ")
     );
 
     private ArrayList<JongSungDetector> jongSungDetectors = new ArrayList<>(Arrays.asList(
@@ -61,7 +60,7 @@ public class JosaFormatter {
             String str;
 
             if (formattedString.isFixedString()) {
-                str = getAppendString(formattedStrings.get(i - 1).toString(), formattedString.toString());
+                str = getJosaModifiedString(formattedStrings.get(i - 1).toString(), formattedString.toString());
             } else {
                 str = formattedString.toString();
             }
@@ -72,29 +71,64 @@ public class JosaFormatter {
         return sb.toString();
     }
 
-
-    public String getAppendString(String previous, String str) {
+    public String getJosaModifiedString(String previous, String str) {
 
         if (previous == null || previous.length() == 0) {
             return str;
         }
 
-        String readText = getReadText(previous);
+        Pair<String, String> matchedJosaPair = null;
+        int josaIndex = -1;
 
-        ArrayList<JongSungDetector> jongSungDetectors = getJongSungDetectors();
-        for (JongSungDetector jongSungDetector : jongSungDetectors) {
-            if (jongSungDetector.canHandle(readText)) {
-                return replaceStringByJongSung(str, jongSungDetector.hasJongSung(readText));
+        String searchStr = null;
+        for (Pair<String, String> josaPair : josaPairs) {
+            int firstIndex = str.indexOf(josaPair.first);
+            int secondIndex = str.indexOf(josaPair.second);
+
+            if (firstIndex >= 0 && secondIndex >= 0) {
+                if (firstIndex < secondIndex) {
+                    josaIndex = firstIndex;
+                    searchStr = josaPair.first;
+                } else {
+                    josaIndex = secondIndex;
+                    searchStr = josaPair.second;
+                }
+            } else if (firstIndex >= 0) {
+                josaIndex = firstIndex;
+                searchStr = josaPair.first;
+            } else if (secondIndex >= 0) {
+                josaIndex = secondIndex;
+                searchStr = josaPair.second;
             }
+
+            if (josaIndex >= 0 && isEndSkipText(str, 0, josaIndex)) {
+                matchedJosaPair = josaPair;
+                break;
+            }
+        }
+
+        if (matchedJosaPair != null) {
+
+            String readText = getReadText(previous);
+
+            ArrayList<JongSungDetector> jongSungDetectors = getJongSungDetectors();
+            for (JongSungDetector jongSungDetector : jongSungDetectors) {
+                if (jongSungDetector.canHandle(readText)) {
+                    return replaceStringByJongSung(str, matchedJosaPair, jongSungDetector.hasJongSung(readText));
+                }
+            }
+
+            // 없으면 괄호 표현식을 사용한다. ex) "???을(를) 찾을 수 없습니다."
+
+            String replaceStr = matchedJosaPair.first.trim() + "(" + matchedJosaPair.second.trim() + ") ";
+            return str.substring(0, josaIndex) + replaceStr + str.substring(josaIndex + searchStr.length());
         }
 
         return str;
     }
 
-
-    public String replaceStringByJongSung(String str, boolean hasJongSung) {
-
-        for (Pair<String, String> josaPair : josaPairs) {
+    public String replaceStringByJongSung(String str, Pair<String, String> josaPair, boolean hasJongSung) {
+        if (josaPair != null) {
             // 잘못된 것을 찾아야 하므로 반대로 찾는다. 종성이 있으면 종성이 없을 때 사용하는 조사가 사용 되었는지 찾는다.
             String searchStr = hasJongSung ? josaPair.second : josaPair.first;
             String replaceStr = hasJongSung ? josaPair.first : josaPair.second;
@@ -104,6 +138,7 @@ public class JosaFormatter {
                 return str.substring(0, josaIndex) + replaceStr + str.substring(josaIndex + searchStr.length());
             }
         }
+
         return str;
     }
 
