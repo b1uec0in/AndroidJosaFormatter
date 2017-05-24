@@ -209,8 +209,9 @@ public class JosaFormatter {
                 // 종성이 있는 postfix
                 switch (postfix) {
                     case "le":
-                    case "ng":
+                    case "ne":
                     case "me":
+                    case "ng":
                         return true;
                 }
 

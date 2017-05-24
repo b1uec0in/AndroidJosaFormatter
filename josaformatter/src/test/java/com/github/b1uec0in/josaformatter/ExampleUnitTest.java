@@ -23,9 +23,6 @@ public class ExampleUnitTest {
     }
     @Test
     public void sample1() throws Exception {
-        assertEqualsEx("6月은 ", KoreanUtils.format("%s은 ", "6月"));
-
-
         System.out.println("\nsample1:");
 
         assertEqualsEx("OS10은 이미 사용중입니다.", KoreanUtils.format("%s은 이미 사용중입니다.", "OS10"));
@@ -77,14 +74,15 @@ public class ExampleUnitTest {
         assertEqualsEx("(폰)을 ", KoreanUtils.format("%s를 ", "(폰)"));
         assertEquals("(폰)을 ", KoreanUtils.format("(%s)를 ", "폰"));
 
-        assertEquals(4, 2 + 2);
-        String str;
-        str = KoreanUtils.format("%2$s을 %1$s으로 변경하시겠습니까?", "아이폰", "갤럭시");
-        System.out.println(str);
-        str = KoreanUtils.format("%2$s을 %1$s으로 변경하시겠습니까?", "갤럭시7", "아이폰8");
-        System.out.println(str);
+        assertEqualsEx("갤럭시를 아이폰으로 ", KoreanUtils.format("%1$s을 %2$s으로 ", "갤럭시", "아이폰"));
+        assertEqualsEx("iPhone을 Galaxy로 ", KoreanUtils.format("%2$s을 %1$s으로 ", "Galaxy", "iPhone"));
 
+        // 기타
         assertEqualsEx("SK에서는 幸福과 覇氣를 기억하세요.", KoreanUtils.format("%s에서는 %s와 %s를 기억하세요.", "SK", "幸福", "覇氣"));
+
+        // 외국어 처리 : 외국어 뒤 숫자를 영어로 읽는 경우.
+        // 아직 구현 안됨
+        // assertEqualsEx("아이폰3를 갤럭시6로", KoreanUtils.format("%2$s을 %1$s으로", "갤럭시6", "아이폰3"));
 
     }
 
