@@ -89,8 +89,8 @@ public class ExampleUnitTest {
         assertEqualsEx("아이폰3를 갤럭시6로", KoreanUtils.format("%2$s을 %1$s으로", "갤럭시6", "아이폰3"));
 
         // 사용자 규칙 추가
-        KoreanUtils.getDefaultJosaFormatter().addReadRule("넘버", "Number");
-        assertEqualsEx("팬택 베가 넘버 6를 구매하시겠습니까?", KoreanUtils.format("%s를 구매하시겠습니까?", "팬택 베가 넘버 6"));
+        KoreanUtils.getDefaultJosaFormatter().addReadRule("베타", "beta");
+        assertEqualsEx("베타3를", KoreanUtils.format("%s을", "베타3"));
 
     }
 

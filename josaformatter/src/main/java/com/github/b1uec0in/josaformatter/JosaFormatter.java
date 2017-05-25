@@ -40,7 +40,8 @@ public class JosaFormatter {
     // 반대로 '포르쉐911' 처럼 '포르쉐구일일'이나 '포르쉐나인원원'로 읽어도 종성 유무가 동일한 경우는 규칙에 넣을 필요가 없다.
     private ArrayList<Pair<String, String>> readingRules = new ArrayList<>(Arrays.asList(
             new Pair<>("아이폰", "iPhone"),
-            new Pair<>("갤럭시", "Galaxy")
+            new Pair<>("갤럭시", "Galaxy"),
+            new Pair<>("넘버", "number")
     ));
 
     public ArrayList<JongSungDetector> getJongSungDetectors() {
