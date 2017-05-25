@@ -103,7 +103,7 @@ http://gun0912.tistory.com/65
 https://github.com/trilliwon/JNaturalKorean
 
 * 한자를 한글로 변환 <br/>
-http://devhome.tistory.com/18
+http://kangwoo.tistory.com/33
 
 * suffix로 영어 단어 찾기 <br/>
 http://www.litscape.com/word_tools/ends_with.php
