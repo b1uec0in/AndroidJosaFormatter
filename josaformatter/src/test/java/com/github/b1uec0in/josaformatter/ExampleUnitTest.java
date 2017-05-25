@@ -59,6 +59,7 @@ public class ExampleUnitTest {
         assertEqualsEx("WD-40은 이미 사용중입니다.", KoreanUtils.format("%s는 이미 사용중입니다.", "WD-40"));
 
         assertEqualsEx("iOS8.3은 이미 사용중입니다.", KoreanUtils.format("%s는 이미 사용중입니다.", "iOS8.3"));
+        assertEqualsEx("GS25로 목적지를 설정하시겠습니까?", KoreanUtils.format("%s으로 목적지를 설정하시겠습니까?", "GS25"));
 
         // NumberJongSungDetector
         assertEqualsEx("3과 4를 비교", KoreanUtils.format("%s와 %s를 비교", 3, 4));
@@ -85,8 +86,11 @@ public class ExampleUnitTest {
         assertEqualsEx("SK에서는 幸福과 覇氣를 기억하세요.", KoreanUtils.format("%s에서는 %s와 %s를 기억하세요.", "SK", "幸福", "覇氣"));
 
         // 외국어 처리 : 외국어 뒤 숫자를 영어로 읽는 경우.
-        // 아직 구현 안됨
-        // assertEqualsEx("아이폰3를 갤럭시6로", KoreanUtils.format("%2$s을 %1$s으로", "갤럭시6", "아이폰3"));
+        assertEqualsEx("아이폰3를 갤럭시6로", KoreanUtils.format("%2$s을 %1$s으로", "갤럭시6", "아이폰3"));
+
+        // 사용자 규칙 추가
+        KoreanUtils.getDefaultJosaFormatter().addReadRule("넘버", "Number");
+        assertEqualsEx("팬택 베가 넘버 6를 구매하시겠습니까?", KoreanUtils.format("%s를 구매하시겠습니까?", "팬택 베가 넘버 6"));
 
     }
 

@@ -4,6 +4,7 @@ import android.support.v4.util.Pair;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -22,14 +23,24 @@ public class JosaFormatter {
             new Pair<>("으로", "로")
     );
 
+    // 종성(받침) 검사 필터. 순서대로 동작함.
     private ArrayList<JongSungDetector> jongSungDetectors = new ArrayList<>(Arrays.asList(
             new HangulJongSungDetector(),
             new EnglishCapitalJongSungDetector(),
             new EnglishJongSungDetector(),
-            //new EnglishNumberJongSungDetector(),
+            //new EnglishNumberJongSungDetector(), // 일반인이 영어+숫자인 경우 항상 숫자를 영어로 읽는 경우는 드물기 때문에 사용하지 않음.
             new EnglishNumberKorStyleJongSungDetector(),
             new NumberJongSungDetector(),
             new HanjaJongSungDetector()
+    ));
+
+    // 사용자 추가 읽기 규칙. 주로 한글+숫자인 경우 한글로 쓴 외국어를 영어로 인식하기 위해 필요함.
+    // ex) 아이폰3는 한글뒤의 숫자를 '아이폰삼'이 아니라 '아이폰쓰리'로 읽기 위해서는 '아이폰' 한글을 'iPhone' 영어로 인식해야 한다.
+    // 특히 숫자 0,3,6이 사용될 가능성이 있는 경우에 유용함. (0,3,6은 영어로 발음할 때 종성 유무가 한글과 다르다.
+    // 반대로 '포르쉐911' 처럼 '포르쉐구일일'이나 '포르쉐나인원원'로 읽어도 종성 유무가 동일한 경우는 규칙에 넣을 필요가 없다.
+    private ArrayList<Pair<String, String>> readingRules = new ArrayList<>(Arrays.asList(
+            new Pair<>("아이폰", "iPhone"),
+            new Pair<>("갤럭시", "Galaxy")
     ));
 
     public ArrayList<JongSungDetector> getJongSungDetectors() {
@@ -186,6 +197,10 @@ public class JosaFormatter {
     }
 
     public String getReadText(String str) {
+        for (Pair<String, String> readingRule : readingRules) {
+            str = str.replace(readingRule.first, readingRule.second);
+        }
+
         int skipCount = 0;
 
         int i;
@@ -198,6 +213,16 @@ public class JosaFormatter {
         }
 
         return str.substring(0, i + 1);
+    }
+
+    public void addReadRule(String originalText, String replaceText) {
+        for (Pair<String, String> readingRule : readingRules) {
+            if (readingRule.first.equals(originalText)) {
+                readingRules.remove(readingRule);
+                break;
+            }
+        }
+        readingRules.add(new Pair<>(originalText, replaceText));
     }
 
     interface JongSungDetector {
