@@ -34,7 +34,7 @@ dependencies {
 
 ### Features
 * 앞 글자의 종성(받침) 여부에 따라 조사(은,는,이,가,을,를 등)를 교정합니다.
-* 한글 뿐만 아니라 영어, 숫자, 한자 등도 처리가 가능합니다.
+* 한글 뿐만 아니라 영어, 숫자, 한자, 일본어 등도 처리가 가능합니다.
 * 조사 앞에 인용 부호나 괄호가 있어도 동작합니다.
 ```java
 KoreanUtils.format("'%s'는 사용중인 닉네임 입니다.", nickName);
@@ -43,19 +43,21 @@ KoreanUtils.format("'%s'는 사용중인 닉네임 입니다.", nickName);
 
 ### JongSungDetector 기본 우선 순위
 * 한글 (HangulJongSungDetector)<br/>
-: '홍길동'는 -> '홍길동'은
+: '홍길동'은
 * 영문 대문자 약어 (EnglishCapitalJongSungDetector)<br/>
-: 'IBM'가 -> 'IBM'이
+: 'IBM'이(아이비엠이)
 * 일반 영문 (EnglishJongSungDetector)<br/>
-: 'Google'를 -> 'Google'을
-* 영문+숫자 (EnglishNumberJongSungDetector) - 기본 비활성<br/>
-: 'BaskinRobbins31'는 -> 'BaskinRobbins31'은 
+: 'Google'을(구글을)
+* 영문+숫자 (EnglishNumberJongSungDetector)<br/>
+: 'WD40'는(더블유디포티는) - 이렇게 읽는 경우는 드물어 기본으로는 등록되어 있지 않습니다. (예외 처리 참고)
 * 영문+10이하 숫자 (EnglishNumberKorStyleJongSungDetector)<br/>
-: 'MP3'은 -> 'MP3'는
+: 'MP3'는(엠피쓰리는), 'WD40'은(더블유디사십은)
 * 숫자 (NumberJongSungDetector)<br/>
-: '1'와 '2'은  -> '1'과 '2'는
+: '1'과 '2'는(일과 이는)
 * 한자 (HanjaJongSungDetector)<br/>
-: '6月'는 -> '6月'은
+: '6月'은(유월은)
+* 일본어 JapaneseJongSungDetector<br/>
+: 'あゆみ'는(아유미는)
 
 ### 예외 처리
 * '영문+숫자'는 경우 10 이하만 영어로 읽도록 되어 있습니다.<br/>
