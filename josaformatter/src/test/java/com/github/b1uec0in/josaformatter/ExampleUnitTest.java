@@ -47,6 +47,7 @@ public class ExampleUnitTest {
         assertEqualsEx("unit은", KoreanUtils.format("%s는", "unit"));
         assertEqualsEx("p는", KoreanUtils.format("%s는", "p"));
         assertEqualsEx("app은", KoreanUtils.format("%s는", "app"));
+        assertEqualsEx("method는", KoreanUtils.format("%s는", "method"));
 
 
         // EnglishNumberKorStyleJongSungDetector
@@ -122,5 +123,33 @@ public class ExampleUnitTest {
 
         assertEqualsEx("iOS8.3는 이미 사용중입니다.", josaFormatter.format("%s는 이미 사용중입니다.", "iOS8.3"));
 
+    }
+
+    @Test
+    public void testEnglishJongSungDetector() throws Exception {
+
+        // 받침 있는 경우
+        String[] jongSungSample = {
+                "apple",
+                "god",
+                "game",
+                "gone",
+        };
+
+        // 받침 없는 경우
+        String[] notJongSungSample = {
+                "risk",
+                "tank",
+                "text",
+                "wood",
+        };
+
+
+        for (String str: jongSungSample) {
+            assertEquals(str + "은", KoreanUtils.format("%s는", str));
+        }
+        for (String str: notJongSungSample) {
+            assertEquals(str + "는", KoreanUtils.format("%s은", str));
+        }
     }
 }

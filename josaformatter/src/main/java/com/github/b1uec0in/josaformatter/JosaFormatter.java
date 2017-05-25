@@ -4,7 +4,6 @@ import android.support.v4.util.Pair;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -271,32 +270,48 @@ public class JosaFormatter {
 
         @Override
         public boolean canHandle(String str) {
-            return CharUtils.isAlpha(CharUtils.lastChar(str));
+            char lastChar  = CharUtils.lastChar(str);
+
+            // q, j 등으로 끝나는 단어는 알려지지 않음.
+            String unknownWordSuffixs = "qj";
+
+            if (unknownWordSuffixs.indexOf(lastChar) >= 0) {
+                return false;
+            }
+
+            return CharUtils.isAlpha(lastChar);
         }
 
         @Override
         public boolean hasJongSung(String str) {
             char lastChar1 = CharUtils.lastChar(str);
 
-            // 3자 이상인 경우만 마지막 2자만 postfix로 간주.
-            String postfix = null;
+            // 3자 이상인 경우만 마지막 2자만 suffix로 간주.
+            String suffix = null;
             if (str.length() >= 3) {
                 char lastChar2 = str.charAt(str.length() - 2);
                 char lastChar3 = str.charAt(str.length() - 3);
 
                 if (CharUtils.isAlpha(lastChar2) && CharUtils.isAlpha(lastChar3)) {
-                    postfix = (String.valueOf(lastChar2) + String.valueOf(lastChar1)).toLowerCase();
+                    suffix = (String.valueOf(lastChar2) + String.valueOf(lastChar1)).toLowerCase();
                 }
             }
 
-            if (postfix != null) {
-                String jongSungChars = "lmnp";
+            if (suffix != null) {
+                // 마지막 1문자로 오면 항상 종성인 경우
+                String jongSungChars = "blmnp";
                 if (jongSungChars.indexOf(lastChar1) >= 0) {
                     return true;
                 }
 
-                // 종성이 있는 postfix
-                switch (postfix) {
+                // 마지막 1문자로 오면 항상 종성이 아닌 경우
+                String notJongSungChars = "afhiorsuvwxyz";
+                if (jongSungChars.indexOf(lastChar1) >= 0) {
+                    return false;
+                }
+
+                // 마지막 2문자로 오면 항상 종성인 경우
+                switch (suffix) {
                     case "le":
                     case "ne":
                     case "me":
@@ -304,13 +319,23 @@ public class JosaFormatter {
                         return true;
                 }
 
-                // 종성이 없는 postfix
-                switch (postfix) {
-                    case "ed":
+                // 마지막 2문자로 오면 항상 종성이 아닌 경우
+                switch (suffix) {
+                    case "lc": // 크
+                    case "rc":
+                    case "sc":
+
+                    case "ed": // 드
                     case "nd":
                     case "ld":
                     case "rd":
-                    case "lt":
+
+                    case "lk": // 크
+                    case "nk":
+                    case "sk":
+                    case "rk":
+
+                    case "lt": // 트
                     case "nt":
                     case "pt":
                     case "rt":
@@ -319,7 +344,14 @@ public class JosaFormatter {
                         return false;
                 }
 
-                String jongSungExtraChars = "bcdkpqt";
+                // 마지막 2문자에 따라 단어별 예외 케이스가 있는 경우
+                switch (suffix) {
+                    case "od":
+                        return str.endsWith("god") || str.endsWith("good") || str.endsWith("pod");
+                }
+
+                // 나머지는 마지막 1문자를 보고 종성을 판단 한다.
+                String jongSungExtraChars = "cdkpqt";
                 if (jongSungExtraChars.indexOf(lastChar1) >= 0) {
                     return true;
                 }
