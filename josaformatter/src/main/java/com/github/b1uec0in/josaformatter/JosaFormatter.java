@@ -15,11 +15,11 @@ import java.util.Locale;
 public class JosaFormatter {
     // 조사들을 종성이 있을 때와 없을 때 순서로 나열.
     private static List<Pair<String, String>> josaPairs = Arrays.asList(
-            new Pair<>("은 ", "는 "),
-            new Pair<>("이 ", "가 "),
-            new Pair<>("을 ", "를 "),
-            new Pair<>("과 ", "와 "),
-            new Pair<>("으로 ", "로 ")
+            new Pair<>("은", "는"),
+            new Pair<>("이", "가"),
+            new Pair<>("을", "를"),
+            new Pair<>("과", "와"),
+            new Pair<>("으로", "로")
     );
 
     private ArrayList<JongSungDetector> jongSungDetectors = new ArrayList<>(Arrays.asList(
@@ -71,6 +71,34 @@ public class JosaFormatter {
         return sb.toString();
     }
 
+    private static int indexOfJosa(String str, String josa) {
+        int index;
+        int searchFromIndex = 0;
+        int strLength = str.length();
+        int josaLength = josa.length();
+        do {
+            index = str.indexOf(josa, searchFromIndex);
+
+            if (index >=0) {
+                int josaNext = index + josaLength;
+
+                // 조사로 끝나거나 뒤에 공백이 있어야 함.
+                if (josaNext < strLength) {
+                    if (Character.isWhitespace(str.charAt(josaNext))) {
+                        return index;
+                    }
+                } else {
+                    return index;
+                }
+            } else {
+               return -1;
+            }
+            searchFromIndex = index + josaLength;
+        } while(searchFromIndex < strLength);
+
+        return -1;
+    }
+
     public String getJosaModifiedString(String previous, String str) {
 
         if (previous == null || previous.length() == 0) {
@@ -82,8 +110,8 @@ public class JosaFormatter {
 
         String searchStr = null;
         for (Pair<String, String> josaPair : josaPairs) {
-            int firstIndex = str.indexOf(josaPair.first);
-            int secondIndex = str.indexOf(josaPair.second);
+            int firstIndex = indexOfJosa(str, josaPair.first);
+            int secondIndex = indexOfJosa(str, josaPair.second);
 
             if (firstIndex >= 0 && secondIndex >= 0) {
                 if (firstIndex < secondIndex) {
@@ -120,7 +148,7 @@ public class JosaFormatter {
 
             // 없으면 괄호 표현식을 사용한다. ex) "???을(를) 찾을 수 없습니다."
 
-            String replaceStr = matchedJosaPair.first.trim() + "(" + matchedJosaPair.second.trim() + ") ";
+            String replaceStr = matchedJosaPair.first + "(" + matchedJosaPair.second + ")";
             return str.substring(0, josaIndex) + replaceStr + str.substring(josaIndex + searchStr.length());
         }
 

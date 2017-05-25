@@ -28,10 +28,10 @@ public class ExampleUnitTest {
         assertEqualsEx("OS10은 이미 사용중입니다.", KoreanUtils.format("%s은 이미 사용중입니다.", "OS10"));
 
         // HangulJongSungDetector
-        assertEqualsEx("삼을 ", KoreanUtils.format("%s을 ", "삼"));
-        assertEquals("삼을 ", KoreanUtils.format("%s를 ", "삼"));
-        assertEqualsEx("사를 ", KoreanUtils.format("%s을 ", "사"));
-        assertEquals("사를 ", KoreanUtils.format("%s를 ", "사"));
+        assertEqualsEx("삼을", KoreanUtils.format("%s을", "삼"));
+        assertEquals("삼을", KoreanUtils.format("%s를", "삼"));
+        assertEqualsEx("사를", KoreanUtils.format("%s을", "사"));
+        assertEquals("사를", KoreanUtils.format("%s를", "사"));
 
         // EnglishCapitalJongSungDetector
         assertEqualsEx("FBI는 이미 사용중입니다.", KoreanUtils.format("%s는 이미 사용중입니다.", "FBI"));
@@ -41,12 +41,12 @@ public class ExampleUnitTest {
         assertEquals("IBM은 이미 사용중입니다.", KoreanUtils.format("%s은 이미 사용중입니다.", "IBM"));
 
         // EnglishJongSungDetector
-        assertEqualsEx("gradle은 ", KoreanUtils.format("%s는 ", "gradle"));
-        assertEqualsEx("glide는 ", KoreanUtils.format("%s는 ", "glide"));
-        assertEqualsEx("first는 ", KoreanUtils.format("%s는 ", "first"));
-        assertEqualsEx("unit은 ", KoreanUtils.format("%s는 ", "unit"));
-        assertEqualsEx("p는 ", KoreanUtils.format("%s는 ", "p"));
-        assertEqualsEx("app은 ", KoreanUtils.format("%s는 ", "app"));
+        assertEqualsEx("gradle은", KoreanUtils.format("%s는", "gradle"));
+        assertEqualsEx("glide는", KoreanUtils.format("%s는", "glide"));
+        assertEqualsEx("first는", KoreanUtils.format("%s는", "first"));
+        assertEqualsEx("unit은", KoreanUtils.format("%s는", "unit"));
+        assertEqualsEx("p는", KoreanUtils.format("%s는", "p"));
+        assertEqualsEx("app은", KoreanUtils.format("%s는", "app"));
 
 
         // EnglishNumberKorStyleJongSungDetector
@@ -56,7 +56,7 @@ public class ExampleUnitTest {
         assertEqualsEx("OS10은 이미 사용중입니다.", KoreanUtils.format("%s은 이미 사용중입니다.", "OS10"));
         assertEqualsEx("Office2000은 이미 사용중입니다.", KoreanUtils.format("%s은 이미 사용중입니다.", "Office2000"));
         assertEqualsEx("Office2010은 이미 사용중입니다.", KoreanUtils.format("%s는 이미 사용중입니다.", "Office2010"));
-        assertEqualsEx("WD40은 이미 사용중입니다.", KoreanUtils.format("%s는 이미 사용중입니다.", "WD40"));
+        assertEqualsEx("WD-40은 이미 사용중입니다.", KoreanUtils.format("%s는 이미 사용중입니다.", "WD-40"));
 
         assertEqualsEx("iOS8.3은 이미 사용중입니다.", KoreanUtils.format("%s는 이미 사용중입니다.", "iOS8.3"));
 
@@ -66,16 +66,17 @@ public class ExampleUnitTest {
 
 
         // HanjaJongSungDetector
-        assertEqualsEx("6月은 ", KoreanUtils.format("%s는 ", "6月"));
-        assertEqualsEx("大韓民國은 ", KoreanUtils.format("%s는 ", "大韓民國"));
+        assertEqualsEx("6月은", KoreanUtils.format("%s는", "6月"));
+        assertEqualsEx("大韓民國은", KoreanUtils.format("%s는", "大韓民國"));
 
 
         // getReadText, skipEndText
-        assertEqualsEx("(폰)을 ", KoreanUtils.format("%s를 ", "(폰)"));
-        assertEquals("(폰)을 ", KoreanUtils.format("(%s)를 ", "폰"));
+        assertEqualsEx("(폰)을", KoreanUtils.format("%s를", "(폰)"));
+        assertEquals("(폰)을", KoreanUtils.format("(%s)를", "폰"));
 
-        assertEqualsEx("갤럭시를 아이폰으로 ", KoreanUtils.format("%1$s을 %2$s으로 ", "갤럭시", "아이폰"));
-        assertEqualsEx("iPhone을 Galaxy로 ", KoreanUtils.format("%2$s을 %1$s으로 ", "Galaxy", "iPhone"));
+        assertEqualsEx("갤럭시를 아이폰으로", KoreanUtils.format("%1$s을 %2$s으로", "갤럭시", "아이폰"));
+        assertEqualsEx("iPhone을 Galaxy로", KoreanUtils.format("%2$s을 %1$s으로", "Galaxy", "iPhone"));
+        assertEqualsEx("아이폰을 Galaxy로 변경할까요?", KoreanUtils.format("%s를 %s으로 변경할까요?", "아이폰", "Galaxy"));
 
         // 판단 불가
         assertEqualsEx("???을(를) 찾을 수 없습니다.", KoreanUtils.format("%s를 찾을 수 없습니다.", "???"));
@@ -113,7 +114,7 @@ public class ExampleUnitTest {
         assertEqualsEx("OS10은 이미 사용중입니다.", josaFormatter.format("%s은 이미 사용중입니다.", "OS10"));
         assertEqualsEx("Office2000는 이미 사용중입니다.", josaFormatter.format("%s은 이미 사용중입니다.", "Office2000"));
         assertEqualsEx("Office2010은 이미 사용중입니다.", josaFormatter.format("%s는 이미 사용중입니다.", "Office2010"));
-        assertEqualsEx("WD40는 이미 사용중입니다.", josaFormatter.format("%s는 이미 사용중입니다.", "WD40"));
+        assertEqualsEx("WD-40는 이미 사용중입니다.", josaFormatter.format("%s는 이미 사용중입니다.", "WD-40"));
 
         assertEqualsEx("iOS8.3는 이미 사용중입니다.", josaFormatter.format("%s는 이미 사용중입니다.", "iOS8.3"));
 
