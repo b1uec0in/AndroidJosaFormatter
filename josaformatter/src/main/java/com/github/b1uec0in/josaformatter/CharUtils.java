@@ -29,6 +29,18 @@ class CharUtils {
         return isHangulFullChar(ch) && (ch - 0xAC00) % 28 > 0;
     }
 
+    public static boolean isHiragana(char ch) {
+        return ch >= 0x3040 && ch <= 0x309F;
+    }
+
+    public static boolean isKatakana(char ch) {
+        return ch >= 0x30A0 && ch <= 0x30FF;
+    }
+
+    public static boolean isJapanese(char ch) {
+        return isHiragana(ch) || isKatakana(ch);
+    }
+
     // String manipulation
     public static char lastChar(CharSequence charSequence) {
         if (charSequence == null) {

@@ -71,6 +71,10 @@ public class ExampleUnitTest {
         assertEqualsEx("6月은", KoreanUtils.format("%s는", "6月"));
         assertEqualsEx("大韓民國은", KoreanUtils.format("%s는", "大韓民國"));
 
+        // JapaneseJongSungDetector
+        assertEqualsEx("たくあん은", KoreanUtils.format("%s는", "たくあん")); // 타쿠앙
+        assertEqualsEx("あゆみ는", KoreanUtils.format("%s은", "あゆみ")); // 아유미
+        assertEqualsEx("マリゾン은", KoreanUtils.format("%s는", "マリゾン")); // 마리존
 
         // getReadText, skipEndText
         assertEqualsEx("(폰)을", KoreanUtils.format("%s를", "(폰)"));

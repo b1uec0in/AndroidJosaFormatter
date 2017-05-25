@@ -30,7 +30,8 @@ public class JosaFormatter {
             //new EnglishNumberJongSungDetector(), // 일반인이 영어+숫자인 경우 항상 숫자를 영어로 읽는 경우는 드물기 때문에 사용하지 않음.
             new EnglishNumberKorStyleJongSungDetector(),
             new NumberJongSungDetector(),
-            new HanjaJongSungDetector()
+            new HanjaJongSungDetector(),
+            new JapaneseJongSungDetector()
     ));
 
     // 사용자 추가 읽기 규칙. 주로 한글+숫자인 경우 한글로 쓴 외국어를 영어로 인식하기 위해 필요함.
@@ -574,6 +575,22 @@ public class JosaFormatter {
         public boolean hasJongSung(String str) {
             char hangulChar = HanjaMap.toHangul(CharUtils.lastChar(str));
             return CharUtils.hasHangulJongSung(hangulChar);
+        }
+    }
+
+    // 일본어
+    public static class JapaneseJongSungDetector implements JongSungDetector {
+
+        @Override
+        public boolean canHandle(String str) {
+            return CharUtils.isJapanese(CharUtils.lastChar(str));
+        }
+
+        @Override
+        public boolean hasJongSung(String str) {
+            char lastChar = CharUtils.lastChar(str);
+
+            return lastChar == 0x30f3 || lastChar == 0x3093;
         }
     }
 }
