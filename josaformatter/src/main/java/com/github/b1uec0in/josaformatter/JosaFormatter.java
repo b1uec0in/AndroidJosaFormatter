@@ -1,7 +1,5 @@
 package com.github.b1uec0in.josaformatter;
 
-import android.support.v4.util.Pair;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

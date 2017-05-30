@@ -87,6 +87,9 @@ public class ExampleUnitTest {
         // 판단 불가
         assertEqualsEx("???을(를) 찾을 수 없습니다.", KoreanUtils.format("%s를 찾을 수 없습니다.", "???"));
 
+        // ignore
+        assertEquals("서울에서", KoreanUtils.format("%s에서", "서울"));
+
         // 기타
         assertEqualsEx("SK에서는 幸福과 覇氣를 기억하세요.", KoreanUtils.format("%s에서는 %s와 %s를 기억하세요.", "SK", "幸福", "覇氣"));
 
