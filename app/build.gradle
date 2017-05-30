@@ -1,5 +1,8 @@
 apply plugin: 'com.android.application'
 
+repositories {
+    maven { url 'https://jitpack.io' }
+}
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
@@ -28,5 +31,5 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
 
-    compile project(path: ':josaformatter')
+    compile 'com.github.b1uec0in:JosaFormatter:1.4'
 }
